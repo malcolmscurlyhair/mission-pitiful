@@ -1,0 +1,4 @@
+openai
+faker
+yaml
+unidecode
