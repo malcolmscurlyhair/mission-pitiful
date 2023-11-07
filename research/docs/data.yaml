@@ -121,7 +121,7 @@ amazon:
 ameren-corp:
   name:              "Ameren Corp"
   code-name:         fuchsia-rich-organization
-  mission-statement: "At BLANK, we are focused on powering life by delivering the energy SERVICES our customers need. We strive to operational excellence in a safe, reliable and affordable way."
+  mission-statement: "At BLANK, we are focused on powering life by delivering the energy services our customers need. We strive to operational excellence in a safe, reliable and affordable way."
   business-model:    "Provides electricity and gas services."
 american-electric-power:
   name:              "American Electric Power"
