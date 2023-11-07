@@ -1,8 +1,0 @@
-{
-	"/": [
-		"src/routes/+page.ts"
-	],
-	"/play": [
-		"src/routes/play/+page.server.ts"
-	]
-}
