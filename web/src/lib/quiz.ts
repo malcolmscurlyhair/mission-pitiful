@@ -1,4 +1,4 @@
-const companyData = {
+export const companies = {
   "3m-co": {
     "name":              "3M Co",
     "code-name":         "yellow-emotional-log",
