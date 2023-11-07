@@ -14,7 +14,7 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
+research/lib/
 lib64/
 parts/
 sdist/
@@ -166,9 +166,9 @@ research/venv
 .idea/
 
 node_modules
-/build
-/.svelte-kit
-/package
+web/build
+web/.svelte-kit
+web/package
 .env.*
 !.env.example
 .vercel
