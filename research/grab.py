@@ -136,14 +136,11 @@ if not os.path.exists(data_file):
 
       slug = slugify(company)
 
-      file.write(f"  \"{slug}\": {{\n")
-      file.write(f"    \"name\":              \"{company}\",\n")
+      file.write(f"  \"{company}\": {{\n")
 
-      code_name      = f"{fake.color_name()}-{fake.word('adjective')}-{fake.word('noun')}".lower()
       statement      = statements[slug].replace('"', '\\"')
       business_model = models[slug].replace('"', '\\"')
 
-      file.write(f"    \"code-name\":         \"{code_name}\",\n")
       file.write(f"    \"mission-statement\": \"{statement}\",\n")
       file.write(f"    \"business-model\":    \"{business_model}\",\n")
 
