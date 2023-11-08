@@ -1,10 +1,8 @@
 <script lang="ts">
+  import { enhance } from '$app/forms';
   import type { PageData, ActionData } from './$types';
 
-  /** @type {import('./$types').PageData} */
   export let data: PageData;
-
-  /** @type {import('./$types').ActionData} */
   export let form: ActionData;
 
   let index         : number,
@@ -64,7 +62,7 @@
     index++;
   }
 
-  function resetGame() {
+  function restart() {
     window.location.href = '/play'
   }
 </script>
@@ -72,12 +70,16 @@
 {#if gameIsOver}
   <div class="result">
     Your score is {score} out of 10.
-    <a href="#" class="reset" on:click={resetGame}>
-      Click here to restart.
-    </a>
+
+    <form method="POST" action="?/restart">
+      <button type="submit">
+        Click here to restart.
+      </button>
+    </form>
   </div>
 {:else}
   <h2>Question {index + 1} (currentGuess: {currentGuess}) (score: {score})</h2>
+
   <div class="question">
     <div class="preamble">Which company has the following mission statement:</div>
     <p class="mission-statement">
@@ -99,22 +101,25 @@
           {/if}
         {/each}
       </ul>
-      <a href="#" class="next-question" on:click={nextQuestion}>
-        Next
-      </a>
+      <form method="POST" action="?/nextQuestion">
+        <button type="submit">
+          Next
+        </button>
+      </form>
     {:else}
       <ul class="possible-answers">
         {#each choices as choice}
           <li>
-            <a href="#" class="answer" on:click={() => { useHasGuessed(choice) }}>
-              {choice}
-            </a>
+            <form method="POST" action="?/useHasGuessed">
+              <input name="guess" type="hidden" value={choice} />
+
+              <button type="submit">
+                {choice}
+              </button>
+            </form>
           </li>
         {/each}
       </ul>
     {/if}
   </div>
 {/if}
-
-
-
