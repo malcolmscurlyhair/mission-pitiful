@@ -1,5 +1,7 @@
 import { Game } from './game';
+import type { PageServerLoad, Actions } from './$types';
 
+/** @satisfies {import('./$types').PageServerLoad} */
 export const load = (({ cookies }) => {
   const game = new Game(cookies.get('mission-pitiful'));
 
@@ -16,6 +18,7 @@ export const load = (({ cookies }) => {
   };
 });
 
+/** @satisfies {import('./$types').Actions} */
 export const actions = {
 
   /**

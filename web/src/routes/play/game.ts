@@ -49,13 +49,19 @@ export class Game {
 
       // Pick the next 9 companies as wrong answers.
       const wrongAnswers = companyNames.splice(0, 9).map((name) => {
-        return companies[companyName]['name']
+        return companies[name]['name']
       });
 
       const allAnswers = [ companyDetail['name'], ...wrongAnswers ];
 
       this.choices.push(shuffle(allAnswers));
     })
+
+    // Add any empty slot in each array for the 'game over' state.
+    this.correctAnswers.push(null);
+    this.statements.push(null);
+    this.descriptions.push(null);
+    this.choices.push(null);
   }
 
   /**
@@ -78,17 +84,10 @@ export class Game {
    * Skip to the next question, once the user has reviewed the answer. Return
    * 'true' if the game is over.
    */
-  nextQuestion() : boolean{
+  nextQuestion() : boolean {
     this.index++;
     this.showingAnswer = false;
 
-    return this.index == 10;
-  }
-
-  /**
-   * Is the game over?
-   */
-  isGameOver() : boolean {
     return this.index == 10;
   }
 
