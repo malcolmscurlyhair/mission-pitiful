@@ -1,7 +1,6 @@
 import os
 import re
 import yaml
-import faker
 import openai
 import unidecode
 
@@ -124,8 +123,6 @@ with open(business_models, 'r') as file:
 # giving the game away, if needed.)
 if not os.path.exists(data_file):
   print(f"Generating the combined JSON file")
-
-  fake = faker.Faker()
 
   with open(data_file, "w") as file:
     file.write('{\n')
