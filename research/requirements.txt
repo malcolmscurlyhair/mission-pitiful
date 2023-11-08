@@ -1,4 +1,3 @@
 openai
-faker
 yaml
 unidecode
