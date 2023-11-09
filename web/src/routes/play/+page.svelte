@@ -1,75 +1,50 @@
 <script lang="ts">
   import { enhance } from '$app/forms';
+  import { Game } from './game';
+
   import type { PageData, ActionData } from './$types';
 
   export let data: PageData;
   export let form: ActionData;
 
-  let index         : number,
-      gameIsOver    : boolean,
-      question      : string,
-      choices       : string[],
-      correctAnswer : string,
-      description   : string,
-      guesses       : string[],
-      currentGuess  : string,
-      showingAnswer : boolean,
-      score         : number;
+  let game = new Game(data.state)
 
-  /** The index of the current guess. */
-  $: index = data.index;
-
-  /** Whether the user has answered all the questions. **/
-  $: gameIsOver = index == 10;
-
-  /** Latest quiz question. */
-  $: question = data.statements[index];
-
-  /** All possible answers to the current question. */
-  $: choices = data.choices[index];
-
-  /** Latest correct answer. */
-  $: correctAnswer = data.correctAnswers[index];
-
-  /** The actual business model of the company under discussion. */
-  $: description = data.descriptions[index];
-
-  /** Correct answer to the current quiz question. */
-  $: guesses = data.guesses;
-
-  /** Correct answer to the current quiz question. */
-  $: currentGuess = index >= guesses.length ? guesses[index] : null;
-
-  /** Whether we are showing the current (correct) answer after the user has made a guess. */
-  $: showingAnswer = data.showingAnswer;
-
-  /** The user's score. */
-  $: score = data.score;
+  $: index         = game.index;
+  $: gameIsOver    = index == 10;
+  $: currentGuess  = index >= game.guesses.length ? game.guesses[index] : null;
+  $: showingAnswer = game.showingAnswer;
+  $: choices       = game.choices[index];
+  $: correctAnswer = game.correctAnswers[index];
+  $: description   = game.descriptions[index];
 
   function useHasGuessed(answer: string) {
-    guesses.push(answer)
-    currentGuess = answer
+    game.useHasGuessed(answer);
 
-    if (answer == correctAnswer) {
-      score++;
-    }
-
-    showingAnswer = true;
+    currentGuess  = answer;
+    index         = game.index;
+    showingAnswer = game.showingAnswer;
   }
 
   function nextQuestion() {
-    showingAnswer = false;
-    index++;
+    game.nextQuestion()
+
+    currentGuess  = null;
+    index         = game.index;
+    showingAnswer = game.showingAnswer;
   }
 
   function restart() {
-    window.location.href = '/play'
+    game.reset()
+
+    currentGuess  = null;
+    index         = game.index;
+    showingAnswer = game.showingAnswer;
   }
 </script>
 
 {#if gameIsOver}
   <div class="result">
-    Your score is {score} out of 10.
+    Your score is {game.score} out of 10.
 
     <form method="POST" action="?/restart">
       <button type="submit">
@@ -78,12 +53,12 @@
     </form>
   </div>
 {:else}
-  <h2>Question {index + 1} (currentGuess: {currentGuess}) (score: {score})</h2>
+  <h2>Question {index + 1} (score: {game.score})</h2>
 
   <div class="question">
     <div class="preamble">Which company has the following mission statement:</div>
     <p class="mission-statement">
-      {question}
+      {game.statements[index]}
     </p>
     {#if showingAnswer}
       <ul class="possible-answers">
