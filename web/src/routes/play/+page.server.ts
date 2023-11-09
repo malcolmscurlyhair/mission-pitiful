@@ -1,23 +1,35 @@
 import { Game } from './game';
 import { redirect } from '@sveltejs/kit'
 
+/**
+ * During server-side rendering, initialize the game state, potentially loading it from a cookie.
+ */
 export const load = (({ cookies }) => {
   const game = new Game(cookies.get('mission-pitiful'));
 
+  /**
+   * Serialize the state of the game, so it can be reinitiazlied on the client-side.
+   */
   return {
     state: game.toString()
   };
 });
 
+/**
+ * This actions will get invoked if JavaScript is disabled in the browser. In this scenario,
+ * we fall back to the traditional HTTP request/HTTP response lifecycle. The state of the
+ * game will be pulled from the cookie, updated according to the action being performed, then
+ * serialized back to the cookie.
+ */
 export const actions = {
 
   /**
-   * Modify game state in reaction to a guess.
+   * Update game state based on a guess.
    */
   useHasGuessed: async ({ request, cookies }) => {
     const game  = new Game(cookies.get('mission-pitiful'));
     const data  = await request.formData();
-    const guess = /** @type {string} */ data.get('guess') /***/ as string;
+    const guess = data.get('guess') as string;
 
     game.useHasGuessed(guess);
 
@@ -27,7 +39,7 @@ export const actions = {
   },
 
   /**
-   * Modify game state when the user presses "Next".
+   * Skip to the next question, once the user has reviewed an answer.
    */
   nextQuestion: async ({ request, cookies }) => {
     const game = new Game(cookies.get('mission-pitiful'));
@@ -39,6 +51,10 @@ export const actions = {
     throw redirect(303, '/play')
   },
 
+  /**
+   * Reset the state of the game (either when the user first comes to the /play
+   * page, or when they reset, or when the opt to play again).
+   */
   restart: async ({ cookies }) => {
     cookies.delete('mission-pitiful');
 

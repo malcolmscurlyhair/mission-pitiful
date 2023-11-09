@@ -41,7 +41,7 @@ export class Game {
         })
       }
       catch (e) {
-        console.log(e)
+        console.error(e)
 
         // There any number of reasons the cookie could be corrupted, just reset the game state.
         this.reset()
@@ -92,7 +92,7 @@ export class Game {
   }
 
   /**
-   * Update game state based on a guess. Return 'true' if the answer is correct.
+   * Update game state based on a guess.
    */
   useHasGuessed(guess: string) {
     this.guesses.push(guess);
@@ -104,8 +104,7 @@ export class Game {
   }
 
   /**
-   * Skip to the next question, once the user has reviewed the answer. Return
-   * 'true' if the game is over.
+   * Skip to the next question, once the user has reviewed an answer.
    */
   nextQuestion() {
     this.index++;
@@ -113,10 +112,10 @@ export class Game {
   }
 
   /**
-   * Serialize game state so it can be set as a cookie.
+   * Serialize game state so it can be set as a cookie or passed to the client-side.
    */
   toString() : string {
-    const response = JSON.stringify({
+    return JSON.stringify({
       index          : this.index,
       score          : this.score,
       guesses        : this.guesses,
@@ -124,11 +123,6 @@ export class Game {
       choices        : this.choices,
       correctAnswers : this.correctAnswers,
     })
-
-    console.log(response);
-    console.log(`Serialized form is ${response.length} characters`)
-
-    return response;
   }
 }
 

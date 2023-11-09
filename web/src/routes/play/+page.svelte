@@ -1,11 +1,7 @@
 <script lang="ts">
-  import { enhance } from '$app/forms';
   import { Game } from './game';
 
-  import type { PageData, ActionData } from './$types';
-
-  export let data: PageData;
-  export let form: ActionData;
+  export let data;
 
   let game = new Game(data.state)
 
