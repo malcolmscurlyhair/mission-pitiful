@@ -46,7 +46,7 @@
   <div class="result">
     Your score is {game.score} out of 10.
 
-    <form method="POST" action="?/restart">
+    <form method="POST" action="?/restart" on:submit|preventDefault={restart}>
       <button type="submit">
         Click here to restart.
       </button>
@@ -76,7 +76,7 @@
           {/if}
         {/each}
       </ul>
-      <form method="POST" action="?/nextQuestion">
+      <form method="POST" action="?/nextQuestion" on:submit|preventDefault={nextQuestion}>
         <button type="submit">
           Next
         </button>
@@ -85,7 +85,7 @@
       <ul class="possible-answers">
         {#each choices as choice}
           <li>
-            <form method="POST" action="?/useHasGuessed">
+            <form method="POST" action="?/useHasGuessed" on:submit|preventDefault={() => useHasGuessed(choice)}>
               <input name="guess" type="hidden" value={choice} />
 
               <button type="submit">
