@@ -125,17 +125,25 @@ export class Game {
   }
 
   /**
-   * Serialize game state so it can be set as a cookie or passed to the client-side.
+   * Serialize game state so it can be set as a cookie, passed to the client-side, or
+   * saved in localStorage.
    */
-  toString() : string {
-    return JSON.stringify({
+  toString(includeDescriptions: boolean = false) : string {
+    const state = {
       index          : this.index,
       score          : this.score,
       guesses        : this.guesses,
       showingAnswer  : this.showingAnswer,
       choices        : this.choices,
       correctAnswers : this.correctAnswers,
-    })
+    }
+
+    if (includeDescriptions) {
+      state['statements']   = this.statements
+      state['descriptions'] = this.descriptions
+    }
+
+    return JSON.stringify(state)
   }
 }
 

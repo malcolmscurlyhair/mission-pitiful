@@ -1,9 +1,12 @@
 <script lang="ts">
-  import { Game } from './game';
+  import { browser } from "$app/environment"
+  import { Game    } from './game';
 
   export let data;
 
-  let game = new Game(data.state)
+  const localState = browser && localStorage ? localStorage.getItem('mission-pitiful') : null
+
+  let game = new Game(localState || data.state)
 
   $: index         = game.index;                 // Which question number the user is on (0-10).
   $: score         = game.score;                 // The total score so far.
@@ -22,6 +25,8 @@
     index         = game.index;
     showingAnswer = game.showingAnswer;
     score         = game.score;
+
+    localStorage.setItem('mission-pitiful', game.toString(true));
   }
 
   function nextQuestion() {
@@ -31,6 +36,8 @@
     index         = game.index;
     showingAnswer = game.showingAnswer;
     score         = game.score;
+
+    localStorage.setItem('mission-pitiful', game.toString(true));
   }
 
   function restart() {
@@ -40,6 +47,8 @@
     index         = game.index;
     showingAnswer = game.showingAnswer;
     score         = game.score;
+
+    localStorage.removeItem('mission-pitiful');
   }
 </script>
 
