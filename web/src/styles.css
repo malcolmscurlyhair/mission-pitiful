@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Customize some of the standard HTML tags to apply spacing and sizing. */
+@layer base {
+  h1 {
+    @apply text-2xl mt-3;
+  }
+  h2 {
+    @apply text-xl;
+  }
+}
