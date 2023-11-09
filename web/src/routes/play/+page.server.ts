@@ -2,7 +2,7 @@ import { Game } from './game';
 import { redirect } from '@sveltejs/kit'
 
 /**
- * During server-side rendering, initialize the game state, potentially loading it from a cookie.
+ * During server-side rendering initialize the game state, potentially loading it from a cookie.
  */
 export const load = (({ cookies }) => {
   const game = new Game(cookies.get('mission-pitiful'));
@@ -16,10 +16,10 @@ export const load = (({ cookies }) => {
 });
 
 /**
- * This actions will get invoked if JavaScript is disabled in the browser. In this scenario,
+ * These actions will get invoked if JavaScript is disabled in the browser. In this scenario
  * we fall back to the traditional HTTP request/HTTP response lifecycle. The state of the
- * game will be pulled from the cookie, updated according to the action being performed, then
- * serialized back to the cookie.
+ * game will be pulled from the cookie, updated according to the action being performed,
+ * then serialized back to the cookie.
  */
 export const actions = {
 

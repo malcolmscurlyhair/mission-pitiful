@@ -1,5 +1,18 @@
 import { companies } from '$lib/quiz';
 
+/**
+ * The shows the user a number of company mission statements, and them to guess which
+ * company they correspond to from a multiple choice selection. To model this, we
+ * load in a random selection of companies from quiz.ts, along with the mission statement
+ * and a clearer description of the business model, plus a list of possible answers (only
+ * one of which is correct.)
+ *
+ * At any given them we are in one of three states:
+ *
+ *  * The user is being asked a quiz question (showingAnswer = false, index < 10)
+ *  * The user is being shown the correct answer after the have submitted a guess (showingAnswer = false, index < 10)
+ *  * The game is over (index >= 10).
+ */
 export class Game {
   index:          number;      // Which question number the user is on (0-10).
   score:          number;      // The total score so far.
@@ -127,7 +140,7 @@ export class Game {
 }
 
 /**
- * Randomize an array of strings.
+ * Randomly shuffle an array of strings.
  */
 function shuffle(array: string[]) : string[] {
   const shuffled = array.slice();

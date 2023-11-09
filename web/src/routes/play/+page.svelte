@@ -5,13 +5,15 @@
 
   let game = new Game(data.state)
 
-  $: index         = game.index;
-  $: gameIsOver    = index == 10;
-  $: currentGuess  = index >= game.guesses.length ? game.guesses[index] : null;
-  $: showingAnswer = game.showingAnswer;
-  $: choices       = game.choices[index];
-  $: correctAnswer = game.correctAnswers[index];
-  $: description   = game.descriptions[index];
+  $: index         = game.index;                 // Which question number the user is on (0-10).
+  $: score         = game.score;                 // The total score so far.
+  $: gameIsOver    = index == 10;                // Is the game over?
+  $: currentGuess  = game.guesses[index];        // What was the user's last guess.
+  $: showingAnswer = game.showingAnswer;         // Whether we are showing the current answer.
+  $: choices       = game.choices[index];        // The potential answers available for the current question.
+  $: correctAnswer = game.correctAnswers[index]; // The actual correct answer.
+  $: statement     = game.statements[index];     // The mission statement the user has to guess.
+  $: description   = game.descriptions[index];   // A clear description of what the current company does.
 
   function useHasGuessed(answer: string) {
     game.useHasGuessed(answer);
@@ -19,6 +21,7 @@
     currentGuess  = answer;
     index         = game.index;
     showingAnswer = game.showingAnswer;
+    score         = game.score;
   }
 
   function nextQuestion() {
@@ -27,6 +30,7 @@
     currentGuess  = null;
     index         = game.index;
     showingAnswer = game.showingAnswer;
+    score         = game.score;
   }
 
   function restart() {
@@ -35,12 +39,13 @@
     currentGuess  = null;
     index         = game.index;
     showingAnswer = game.showingAnswer;
+    score         = game.score;
   }
 </script>
 
 {#if gameIsOver}
   <div class="result">
-    Your score is {game.score} out of 10.
+    Your score is {score} out of 10.
 
     <form method="POST" action="?/restart" on:submit|preventDefault={restart}>
       <button type="submit">
@@ -49,12 +54,12 @@
     </form>
   </div>
 {:else}
-  <h2>Question {index + 1} (score: {game.score})</h2>
+  <h2>Question {index + 1} (score: {score})</h2>
 
   <div class="question">
     <div class="preamble">Which company has the following mission statement:</div>
     <p class="mission-statement">
-      {game.statements[index]}
+      {statement}
     </p>
     {#if showingAnswer}
       <ul class="possible-answers">
