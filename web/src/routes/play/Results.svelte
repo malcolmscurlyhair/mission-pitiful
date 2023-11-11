@@ -39,27 +39,26 @@
             Future CEO
           {/if}
         </h4>
-        <p class="mt-1 text-left text-sm">
+        <p class="mt-1 text-left text-sm leading-6">
           {#if score < 2}
-            Sadly your ability to decipher corporate language is a little lacking.
-            Instead, your will be forced to do a real job that materially benefits people.
-            Still, at least nobody will be emailing you on a weekend! Crack open a beer and
-            think about joining a union.
+            Sadly your ability to decipher corporate language is lacking.
+            Instead of entering the corporate world you should get a real job that materially benefits people.
+            At least nobody will be emailing you on the weekend!
+            Crack open a beer and think about joining a union.
           {:else if score < 4}
             You can understand just enough corporate language to earn you a desk job,
-            but not enough that you get to have underlings. You are the beating heart of your company,
-            destined never to climb the corporate ladder. Don't forget to complete your training by
-            the end of the week!
+            but not enough that you get to have underlings.
+            You are the beating heart of your company, destined never to climb the corporate ladder.
+            Don't forget to complete your training by the end of the week!
           {:else if score < 6}
             You know just enough corporate language to be dangerous, but probably still
             feel a little uneasy talking making small talk with C-suite folk when you
-            share an elevator. Concentrate on your Q3 deliverables and someday soon
-            there will be a leftover donut in the conference room with your name on it.
+            share an elevator.
+            Concentrate on your Q3 deliverables and someday soon there will be a leftover donut in the conference room with your name on it.
           {:else if score < 8}
-            Your colleagues are jealous of your Powerpoint skills, and you probably belong
-            to a golf club. With some luck, one day you will have an assistant to fill out
-            our expense forms. Remember to continue delivering value and be a customer
-            champion at all times.
+            Your colleagues are jealous of your Powerpoint skills, and you probably belong to a golf club.
+            With some luck, one day you will have an assistant to fill out our expense forms.
+            Remember to continue delivering value and be a customer champion at all times.
           {:else}
             You're a natural at this! Keep on creating the best outcomes for your clients, building
             innovative solutions via sustainable business practices, and your shareholders will

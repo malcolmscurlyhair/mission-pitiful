@@ -1,6 +1,6 @@
 <div class="bg-white">
   <div class="relative isolate px-6 pt-3 lg:px-2">
-    <div class="mx-auto max-w-2xl py-10 sm:py-10">
+    <div class="mx-auto max-w-2xl pt-5 pb-8">
       <div class="text-center">
         <h1 class="text-5xl font-bold tracking-tight text-gray-900 sm:text-5xl">
           What's in a Mission Statement?
@@ -42,6 +42,16 @@
     </div>
   </div>
 </div>
+
+<footer class="bg-white">
+  <div class="mx-auto max-w-7xl overflow-hidden px-6 pt-10 pb-7">
+    <nav class="columns-2 flex justify-center" aria-label="Footer">
+      <div class="pb-6">
+        <a href="/about" class="text-sm text-gray-400 hover:text-gray-900">About</a>
+      </div>
+    </nav>
+  </div>
+</footer>
 
 <style>
   strong {

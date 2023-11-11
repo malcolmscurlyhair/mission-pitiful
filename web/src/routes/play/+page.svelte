@@ -216,3 +216,13 @@
   </div>
 </div>
 {/if}
+
+<footer class="bg-white">
+  <div class="mx-auto max-w-7xl overflow-hidden px-6 pt-10 pb-7">
+    <nav class="columns-2 flex justify-center" aria-label="Footer">
+      <div class="pb-6">
+        <a href="/about" class="text-sm text-gray-400 hover:text-gray-900">About</a>
+      </div>
+    </nav>
+  </div>
+</footer>
