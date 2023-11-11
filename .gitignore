@@ -176,4 +176,6 @@ web/package
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
+todo.txt
+
 
