@@ -17,10 +17,9 @@ data is then migrated (via the magic of cut-and-paste) to
 [`/web/src/lib/quiz.ts`](/web/src/lib/quiz.ts), around which the web app is 
 build.
 
-The web app is written using [Svelte](https://svelte.dev/docs/introduction) 
-using [Tailwind](https://tailwindcss.com/docs) for styling. It's a simple 
-app with a handful of pages, that quizzes the user on 10 mission statements 
-then gives them a score. Following the Svelte Sverdle template example, I've 
+The web app lives in [`/web`](/web) is written using [Svelte] 
+(https://svelte.dev/docs/introduction) using [Tailwind](https://tailwindcss.com/docs) for styling. It's a simple app with a handful of pages, that 
+quizzes the user on 10 mission statements then gives them a score. Following the Svelte Sverdle template example, I've 
 tried to use progressive enhancement, so the app will work even with 
 JavaScript disable.
 
