@@ -8,9 +8,9 @@ which are most often guessed wrong.
 ## Architecture
 
 The mission statements and company data are pulled from OpenAI by code in the
-[`/research`](/reseach) directory. The [`/grab.py`](/research/grab.py) asks
-OpenAI for a list of companies, their mission statements, and a succinct 
-description of what each company does, then writes it to disk.
+[`/research`](/reseach) directory. The [`/grab.py`](/research/grab.py) 
+scripts asks OpenAI for a list of companies, their mission statements, and a 
+succinct description of what each company does, then writes it to disk.
 
 The final output is written to [`/research/docs/data.json`], which then forms
 the basis of the quiz. This data is then migrated (via the magic of 
