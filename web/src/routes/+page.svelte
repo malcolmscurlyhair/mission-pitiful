@@ -7,7 +7,7 @@
         </h1>
 
         <div class="mt-5 bg-contain bg-center bg-no-repeat italic"
-             style="background-image: url('/stock/21.jpg'); height: 260px; opacity: 0.8">
+             style="background-image: url('/main.jpg'); height: 260px; opacity: 0.8">
 
         </div>
 
