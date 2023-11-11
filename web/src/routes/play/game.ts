@@ -54,8 +54,6 @@ export class Game {
         })
       }
       catch (e) {
-        console.error(e)
-
         // There any number of reasons the cookie could be corrupted, just reset the game state.
         this.reset()
       }

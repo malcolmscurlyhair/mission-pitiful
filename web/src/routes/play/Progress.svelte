@@ -1,10 +1,11 @@
 <script>
-  export let game;
+  export let game = null;
 </script>
 
 <span class="flex items-center justify-center w-full">
   <ol class="flex items-center pb-5">
-    {#each game.correctAnswers as choice, i}
+    {#if game && game.correctAnswers}
+      {#each game.correctAnswers as choice, i}
       <li class="relative" class:pr-5={i < 9}>
         {#if i < game.index}
 
@@ -53,5 +54,6 @@
         {/if}
       </li>
     {/each}
+    {/if}
   </ol>
 </span>

@@ -4,15 +4,15 @@
 
 <p class="mt-7 mb-6">
   {#if score < 2}
-    Your scored a measly {score} out of 10.
+    You scored a measly {score} out of 10.
   {:else if score < 4}
-    Your scored {score} out of 10.
+    You scored {score} out of 10.
   {:else if score < 6}
-    Your moderately impressive {score} out of 10.
+    You scored a moderately impressive {score} out of 10.
   {:else if score < 8}
-    Your an impressive {score} out of 10.
+    You scored an impressive {score} out of 10.
   {:else if score < 9}
-    Your a very impressive {score} out of 10.
+    You scored a very impressive {score} out of 10.
   {:else}
     You scored a perfect 10!
   {/if}

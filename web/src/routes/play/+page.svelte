@@ -46,15 +46,21 @@
   }
 
   function restart() {
+    localStorage.removeItem('mission-pitiful');
+
     game.reset()
 
+    game          = game;
     currentGuess  = null;
     index         = game.index;
     showingAnswer = game.showingAnswer;
     score         = game.score;
-    game          = game;
+  }
 
+  function exitPage() {
     localStorage.removeItem('mission-pitiful');
+
+    window.location.href = '/'
   }
 
   function djb2Hash(str: string): number {
@@ -69,11 +75,19 @@
 
   // Choose a random stock photo (using the statement descriptor as a seed,
   // so we always get the same image for a given mission statement).
-  $: imageNumber = djb2Hash(statement || "") % 21
-  $: imageUrl    = `/stock/${imageNumber}.jpg`
+  $: imageNumber = djb2Hash(statement || "") % 21;
+  $: imageUrl    = `/stock/${imageNumber}.jpg`;
+
 </script>
 
-<div class="mx-auto max-w-lg py-10">
+<div class="flex md:absolute left-5 top-3 text-gray-400 hover:text-gray-900">
+  <a href="/" class="text-2xl" on:click|preventDefault={exitPage}>
+    ←
+  </a>
+</div>
+
+{#if game}
+  <div class="mx-auto max-w-lg py-10">
   <div class="text-center w-full">
     <Progress game={game} />
 
@@ -115,7 +129,8 @@
       </h3>
     {/if}
 
-    {#each choices as choice}
+    {#if choices}
+      {#each choices as choice}
       {#if choice === currentGuess && choice !== correctAnswer}
         <div class="group flex mt-1 mb-1 rounded-full p-1 text-left">
           <span class="flex min-w-0 flex-1 items-center space-x-3 pl-3">
@@ -149,6 +164,7 @@
         </div>
       {/if}
     {/each}
+    {/if}
 
     <div class="mt-8 w-full text-center">
       <form method="POST" action="?/nextQuestion" on:submit|preventDefault={nextQuestion}>
@@ -164,7 +180,8 @@
     </h3>
 
     <ul role="list" class="flex-wrap mx-15">
-      {#each choices as choice}
+      {#if choices}
+        {#each choices as choice}
         <li class="inline-block items-center justify-between pb-3 mr-3">
           <form method="POST"
                 action="?/useHasGuessed"
@@ -191,10 +208,11 @@
           </form>
         </li>
       {/each}
+      {/if}
     </ul>
   {/if}
 {/if}
 
   </div>
 </div>
-
+{/if}

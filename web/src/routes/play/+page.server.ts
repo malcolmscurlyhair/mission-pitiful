@@ -53,7 +53,7 @@ export const actions = {
 
   /**
    * Reset the state of the game (either when the user first comes to the /play
-   * page, or when they reset, or when the opt to play again).
+   * page, or when the opt to play again).
    */
   restart: async ({ cookies }) => {
     cookies.delete('mission-pitiful');
