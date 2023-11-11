@@ -46,15 +46,13 @@
             At least nobody will be emailing you on the weekend!
             Crack open a beer and think about joining a union.
           {:else if score < 4}
-            You can understand just enough corporate language to earn you a desk job,
-            but not enough that you get to have underlings.
-            You are the beating heart of your company, destined never to climb the corporate ladder.
+            You can understand just enough corporate language to earn you a desk job, but not enough that you get to have underlings.
+            You are the beating heart of your company, sadly destined never to climb the corporate ladder.
             Don't forget to complete your training by the end of the week!
           {:else if score < 6}
-            You know just enough corporate language to be dangerous, but probably still
-            feel a little uneasy talking making small talk with C-suite folk when you
-            share an elevator.
-            Concentrate on your Q3 deliverables and someday soon there will be a leftover donut in the conference room with your name on it.
+            You know just enough corporate language to be dangerous, but probably still feel a little
+            uneasy talking making small talk with C-suite folk when you share an elevator.
+            Concentrate on your Q3 deliverables and there is a leftover donut in the conference room with your name on it.
           {:else if score < 8}
             Your colleagues are jealous of your Powerpoint skills, and you probably belong to a golf club.
             With some luck, one day you will have an assistant to fill out our expense forms.
@@ -62,8 +60,8 @@
           {:else}
             You're a natural at this! Keep on creating the best outcomes for your clients, building
             innovative solutions via sustainable business practices, and your shareholders will
-            continue to grow and thrive. It's lonely at the top, but somehow you manage to sleep
-            sleep easily on your giant pile of stock options.
+            continue to grow and thrive.
+            It's lonely at the top, but somehow you manage to sleep sleep easily on your giant pile of stock options.
           {/if}
         </p>
       </div>

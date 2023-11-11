@@ -1,16 +1,17 @@
 import { companies } from '$lib/quiz';
 
 /**
- * The shows the user a number of company mission statements, and them to guess which
- * company they correspond to from a multiple choice selection. To model this, we
- * load in a random selection of companies from quiz.ts, along with the mission statement
- * and a clearer description of the business model, plus a list of possible answers (only
- * one of which is correct.)
+ * The quiz shows the user a number of company mission statements, and then asks them
+ * to guess which company they correspond to from a multiple choice selection. To model
+ * this, we load in a random selection of companies from quiz.ts, along with the mission
+ * statement and a clearer description of the business model, plus a list of possible
+ * answers (only one of which is correct.)
  *
  * At any given them we are in one of three states:
  *
  *  * The user is being asked a quiz question (showingAnswer = false, index < 10)
- *  * The user is being shown the correct answer after the have submitted a guess (showingAnswer = false, index < 10)
+ *  * The user is being shown the correct answer after the have submitted a guess
+ *    (showingAnswer = false, index < 10)
  *  * The game is over (index >= 10).
  */
 export class Game {
@@ -25,7 +26,7 @@ export class Game {
   descriptions:   string[];    // The descriptions of what each company does.
 
   /**
-   * Create a game object from the player's cookie, or initialise a new game.
+   * Create a game object from the player's from a serialized form, or initialise a new game.
    */
   constructor(serialized: string | undefined = undefined) {
     if (serialized) {
@@ -64,8 +65,7 @@ export class Game {
   }
 
   /**
-   * Reset the state of the game (either when the user first comes to the /play
-   * page, or when they reset, or when the opt to play again).
+   * Reset the state of the game, generating a fresh set of questions.
    */
   reset() {
     this.index          = 0;
@@ -78,9 +78,13 @@ export class Game {
     this.choices        = [];
     this.correctAnswers = [];
 
+    // Put the company names in a random order.
     const companyNames = shuffle(Object.keys(companies));
+
+    // Pick the first 10 as quiz answers.
     const quizAnswers  = companyNames.splice(0, 10);
 
+    // Populate the rest of the game data according to the quiz answers.
     quizAnswers.forEach((companyName) => {
       const companyDetail = companies[companyName];
 
@@ -103,7 +107,7 @@ export class Game {
   }
 
   /**
-   * Update game state based on a guess.
+   * Update game state based on a guess, adjust the score accordingly.
    */
   useHasGuessed(guess: string) {
     this.guesses.push(guess);
@@ -115,7 +119,7 @@ export class Game {
   }
 
   /**
-   * Skip to the next question, once the user has reviewed an answer.
+   * Skip to the next question, after the user has reviewed an answer.
    */
   nextQuestion() {
     this.index++;
@@ -124,7 +128,8 @@ export class Game {
 
   /**
    * Serialize game state so it can be set as a cookie, passed to the client-side, or
-   * saved in localStorage.
+   * saved in localStorage. Cookies have a limited size, so we don't save the mission
+   * statements; localStorage has more room, so that gets the full data set.
    */
   toString(includeDescriptions: boolean = false) : string {
     const state = {

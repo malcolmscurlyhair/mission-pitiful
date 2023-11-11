@@ -2,13 +2,14 @@ import { Game } from './game';
 import { redirect } from '@sveltejs/kit'
 
 /**
- * During server-side rendering initialize the game state, potentially loading it from a cookie.
+ * During server-side rendering we initialize the game state, potentially loading it from a cookie.
  */
 export const load = (({ cookies }) => {
   const game = new Game(cookies.get('mission-pitiful'));
 
   /**
-   * Serialize the state of the game, so it can be reinitiazlied on the client-side.
+   * Serialize the state of the game, so it can be reinitialized on the client-side or by
+   * the server-side renderer.
    */
   return {
     state: game.toString()

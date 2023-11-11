@@ -6,11 +6,12 @@ import unidecode
 
 # A simple script to ask OpenAI for the the biggest N companies in the US,
 # pull down their mission statement and an actual plain-language for what
-# they are best know for. We omit the first sentence of the mission statement
-# so things are a bit vaguer.
+# they are best known for. We omit the first sentence of the mission statement
+# so things are vaguer.
 #
-# To use this, you'll need to add an Open AI access key to you environment
-# variables.
+# To use this script, you'll need to add an Open AI access key to you environment
+# variables. To regenerate a given data set, delete the corresponding file in /docs,
+# otherwise it will be left in place.
 
 openai.api_key = os.getenv('OPEN_AI_API_KEY')
 
@@ -27,7 +28,7 @@ if not os.path.exists(company_names):
 
   response = openai.Completion.create(
     engine     = "text-davinci-003",
-    prompt     = f"What are the top {HOW_MANY_COMPANIES} companies in the USA by market capitalization? Just give me the names, one one each line, without number them.",
+    prompt     = f"What are the top {HOW_MANY_COMPANIES} companies in the USA by market capitalization? Just give me the names, one one each line, without numbering them.",
     max_tokens = 10 * HOW_MANY_COMPANIES,
     n          = 1
   )
@@ -78,7 +79,7 @@ if not os.path.exists(mission_statements):
 
       response = openai.Completion.create(
         engine     = "text-davinci-003",
-        prompt     = f"Give me the the mission statement the company \"{company}\", just the second and third sentences, (or just as many sentences up until you have 50 words), and replace the company name with BLANK. Replace any recognizable names of people or products with BLANK.",
+        prompt     = f"Give me the the mission statement for the company \"{company}\", just the second and third sentences, (or just as many sentences up until you have 50 words), and replace the company name with BLANK. Replace any recognizable names of people or products with BLANK.",
         max_tokens = 300,
         n          = 1
       )
@@ -118,9 +119,7 @@ with open(mission_statements, 'r') as file:
 with open(business_models, 'r') as file:
   models = yaml.safe_load(file)
 
-# Generate the final JSON file, that contains all of the information above in a structured
-# format, plus a randomly generated codename for each company (so we can build URLs without
-# giving the game away, if needed.)
+# Generate the final JSON file that contains all of the information above in a structured format.
 if not os.path.exists(data_file):
   print(f"Generating the combined JSON file")
 
