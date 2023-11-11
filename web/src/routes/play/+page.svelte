@@ -1,7 +1,9 @@
 <script lang="ts">
   import { browser } from "$app/environment"
   import { Game    } from './game';
+
   import Progress from './Progress.svelte';
+  import Results  from './Results.svelte';
 
   export let data;
 
@@ -65,9 +67,9 @@
     return hash >>> 0;
   }
 
-  // Choose a random stock photo (using the statement descriptor as a seed, so we always
-  // get the same image for a given mission statement).
-  $: imageNumber = djb2Hash(statement) % 21
+  // Choose a random stock photo (using the statement descriptor as a seed,
+  // so we always get the same image for a given mission statement).
+  $: imageNumber = djb2Hash(statement || "") % 21
   $: imageUrl    = `/stock/${imageNumber}.jpg`
 </script>
 
@@ -78,7 +80,7 @@
 {#if gameIsOver}
 
   <div>
-    Your scored {score} out of 10.
+    <Results score={score} />
 
     <form method="POST" action="?/restart" on:submit|preventDefault={restart}>
       <button type="submit" class="rounded-full bg-indigo-600 mt-10 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
