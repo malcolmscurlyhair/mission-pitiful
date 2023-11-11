@@ -12,7 +12,7 @@ The mission statements and company data are pulled from OpenAI by code in the
 scripts asks OpenAI for a list of companies, their mission statements, and a 
 succinct description of what each company does, then writes it to disk.
 
-The final output is written to (`/research/docs/data.json`)[/research/docs/data.json], which then forms the basis of the quiz. This 
+The final output is written to [`/research/docs/data.json`](/research/docs/data.json), which then forms the basis of the quiz. This 
 data is then migrated (via the magic of cut-and-paste) to 
 [`/web/src/lib/quiz.ts`](/web/src/lib/quiz.ts), around which the web app is 
 build.
