@@ -50,6 +50,19 @@
 
     localStorage.removeItem('mission-pitiful');
   }
+
+  function djb2Hash(str: string): number {
+    let hash = 5381;
+    for (let i = 0; i < str.length; i++) {
+      hash = (hash * 33) ^ str.charCodeAt(i);
+    }
+    return hash >>> 0;
+  }
+
+  // Choose a random stock photo (using the statement descriptor as a seed, so we always
+  // get the same image for a given mission statement).
+  $: imageNumber = djb2Hash(statement) % 21
+  $: imageUrl    = `/stock/${imageNumber}.jpg`
 </script>
 
 <div class="mx-auto max-w-lg py-10">
@@ -115,7 +128,7 @@
 
     <form method="POST" action="?/restart" on:submit|preventDefault={restart}>
       <button type="submit" class="rounded-full bg-indigo-600 mt-10 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-        Have another go →
+        Have Another Go →
       </button>
     </form>
   </div>
@@ -123,14 +136,17 @@
 {:else}
 
   <h2 class="mt-2 text-base font-bold leading-6 text-gray-900 mb-5">
-    Question {index + 1}
+    Mission Statement {index + 1}
   </h2>
-  <p class="mt-1 text-sm text-gray-500">
-    Read this mission statement:
-  </p>
-  <p class="pt-5 pb-8">
-    {statement}
-  </p>
+
+  <div class="mt-3 mx-20 bg-contain bg-center bg-no-repeat italic"
+       style="background-image: url({imageUrl}); height: 180px; opacity: 0.8">
+
+  </div>
+
+  <blockquote class="text-center text-lg font-semibold mt-4 leading-7 text-gray-900 mb-8">
+    “{statement}”
+  </blockquote>
 
   {#if showingAnswer}
     {#if currentGuess === correctAnswer}
@@ -145,14 +161,14 @@
 
     {#each choices as choice}
       {#if choice === currentGuess && choice !== correctAnswer}
-        <div class="group flex mt-5 mb-5 rounded-full p-1 text-left">
-          <span class="flex min-w-0 flex-1 items-center space-x-3 pl-3 my-3">
+        <div class="group flex mt-1 mb-1 rounded-full p-1 text-left">
+          <span class="flex min-w-0 flex-1 items-center space-x-3 pl-3">
             <div class="ml-3 w-0 flex-1 pt-0.5">
               <p class="text-sm font-medium text-gray-900">{choice}</p>
             </div>
           </span>
 
-          <div class="my-3 mr-10 flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
+          <div class="flex h-10 w-10 items-center justify-center rounded-full bg-red-100">
             <svg class="h-8 w-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
@@ -161,15 +177,15 @@
       {/if}
 
       {#if choice === correctAnswer}
-        <div class="group flex mt-5 mb-5 rounded-full p-1 text-left">
-          <span class="flex min-w-0 flex-1 items-center space-x-3 pl-3 my-3">
+        <div class="group flex mt-1 mb-1 rounded-full p-1 text-left">
+          <span class="flex min-w-0 flex-1 items-center pl-3 mr-8">
             <div class="ml-3 w-0 flex-1 pt-0.5">
               <p class="text-sm font-medium text-gray-900">{choice}</p>
               <p class="mt-1 text-sm text-gray-500">({description})</p>
             </div>
           </span>
 
-          <div class="my-3 mr-10 flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
+          <div class="flex h-10 w-10 items-center justify-center rounded-full bg-green-100">
             <svg class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
             </svg>
@@ -178,7 +194,7 @@
       {/if}
     {/each}
 
-    <div class="w-full text-center">
+    <div class="mt-8 w-full text-center">
       <form method="POST" action="?/nextQuestion" on:submit|preventDefault={nextQuestion}>
         <button type="submit" class="rounded-full bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
           Next →
@@ -225,3 +241,4 @@
 
   </div>
 </div>
+

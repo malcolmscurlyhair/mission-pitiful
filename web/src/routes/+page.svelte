@@ -6,25 +6,46 @@
           What's in a Mission Statement?
         </h1>
 
-        <p class="mt-6 text-md leading-8 text-gray-900 font-bold">
-          Have to ever read a website and thought I have no idea what this company does?
+        <div class="mt-5 bg-contain bg-center bg-no-repeat italic"
+             style="background-image: url('/stock/21.jpg'); height: 260px; opacity: 0.8">
+
+        </div>
+
+        <div class="mx-20 bg-gray-300 illustration mt-5 mb-8">
+
+        </div>
+
+        <p class="mb-5 text-lg text-gray-900 font-bold">
+          Have you ever read a website and thought: I have no idea what this company does?
         </p>
 
-        <p class="mt-6 text-md leading-8 text-gray-600">
-          You aren't alone: corporate language tends to be aspirational but vague.
-          In this quiz, you will be be presented by a 10 separate mission statements,
-          and asked which company they belong to. These are all major companies (though
-          not necessarily household names). This mission statements were extracted by
-          ChatGPT, so may be a little out-of-date (or occasionally hallucinated - don't
-          sue me!)
+        <p class="mb-5 text-md text-gray-600 text-left leading-7">
+          You aren't alone - corporate language tends to be aspirational but vague.
+          Companies are always <strong>helping their customers realize their ambitions</strong> or
+          <strong>delivering productivity to the global marketplace</strong>. They are never just
+          selling carbonated beverages or drilling for oil.
+        </p>
+
+        <p class="mb-5 text-md text-gray-600 text-left leading-7">
+          In this quiz, you will be be presented ten anonymized mission statements
+          and asked which company they belong to. Each is a major company (though
+          not necessarily a household name). How well can you decipher what the corporations
+          actually do?
         </p>
 
         <div class="mt-10 flex items-center justify-center gap-x-6">
           <a href="/play" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-            Click to start →
+            Let's Maximize Some Shareholder Value →
           </a>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<style>
+  strong {
+    font-style: italic;
+    font-weight: bold;
+  }
+</style>
