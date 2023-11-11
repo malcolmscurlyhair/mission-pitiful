@@ -8,7 +8,7 @@ which are most often guessed wrong.
 ## Architecture
 
 The mission statements and company data are pulled from OpenAI by code in the
-[`/research`](/reseach) directory. The [`/grab.py`](/research/grab.py) 
+[`/research`](/research) directory. The [`/grab.py`](/research/grab.py) 
 scripts asks OpenAI for a list of companies, their mission statements, and a 
 succinct description of what each company does, then writes it to disk.
 
