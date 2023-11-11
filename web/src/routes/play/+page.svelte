@@ -110,14 +110,14 @@
 </script>
 
 <!-- The "Quit Game" icon -->
-<div class="flex md:absolute left-5 top-3 text-gray-400 hover:text-gray-900">
+<div class="flex md:absolute left-5 top-4 text-gray-400 hover:text-gray-900">
   <a href="/" class="text-2xl" on:click|preventDefault={exitPage}>
     ←
   </a>
 </div>
 
 {#if game}
-  <div class="mx-auto max-w-lg py-10">
+  <div class="mx-auto max-w-lg py-5">
   <div class="text-center w-full">
 
     <!-- A row of baubles showing how far the user has progressed through the quiz. -->
@@ -149,7 +149,7 @@
        style="background-image: url({imageUrl}); height: 180px; opacity: 0.8">
   </div>
 
-  <blockquote class="text-center text-lg font-semibold mt-4 leading-7 text-gray-900 mb-8">
+  <blockquote class="text-center text-md font-semibold mt-4 leading-7 text-gray-900 mb-8">
     “{statement}”
   </blockquote>
 
