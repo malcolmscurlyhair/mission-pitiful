@@ -18,15 +18,39 @@
   {/if}
 </p>
 
-<div class="overflow-hidden rounded-lg bg-white shadow shadow-lg ring-1 ring-black ring-opacity-5">
+<style>
+  .award-icon {
+    height: 180px;
+    width: 180px;
+  }
+</style>
+
+<div class="my-8 overflow-hidden rounded-lg bg-white shadow shadow-lg ring-1 ring-black ring-opacity-5">
   <div class="px-8 pt-4 pb-6">
-    <div class="flex my-3">
-      <div class="mr-10 flex-shrink-0 self-center">
-        <div class="bg-gray-200" style="height: 220px; width: 180px">
-        </div>
-      </div>
-      <div>
-        <h4 class="text-lg font-bold text-left">
+    <div class="flex my-3 items-start">
+      <div class="mr-7 flex-shrink-0">
+        {#if score < 2}
+          <div class="bg-gray-800 award-icon">
+            <img src="/awards/janitor.svg" alt="A janitor doing a real job">
+          </div>
+        {:else if score < 4}
+          <div class="bg-gray-100 award-icon" style="box-shadow: inset 0 0 10px rgba(150, 150, 150, 0.4);">
+            <img src="/awards/cubicle-dweller.svg" alt="A person wearing a shirt and tie">
+          </div>
+        {:else if score < 6}
+          <div class="bg-red-400 award-icon" style="box-shadow: inset 0 0 10px rgba(150, 100, 100, 0.9);">
+            <img src="/awards/middle-manager.svg" alt="A manager bossing people around">
+          </div>
+        {:else if score < 8}
+          <div class="bg-blue-500 award-icon" style="box-shadow: inset 0 0 10px rgba(100, 100, 100, 0.4);">
+            <img src="/awards/head-of-department.svg" alt="A senior business person give a presentation">
+          </div>
+        {:else}
+          <div class="bg-gray-700 award-icon" style="border-radius: 10px">
+            <img src="/awards/ceo.svg" alt="A CEO giving an inspirational speech">
+          </div>
+        {/if}
+        <h4 class="text-lg font-bold text-center mt-3">
           {#if score < 2}
             Janitor
           {:else if score < 4}
@@ -39,7 +63,9 @@
             Future CEO
           {/if}
         </h4>
-        <p class="mt-1 text-left text-sm leading-6">
+      </div>
+      <div>
+        <p class="mt-0 text-left text-sm leading-6 font-semibold text-gray-500">
           {#if score < 2}
             Sadly your ability to decipher corporate language is lacking.
             Instead of entering the corporate world you should get a real job that materially benefits people.
