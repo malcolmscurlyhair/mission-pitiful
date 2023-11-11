@@ -26,4 +26,4 @@ start reading from there if you want to see how it works.
 
 ## Deployment
 
-I haven't figured this out yet.
+The code is deployed as a AWS Lambda function using [sst.dev](https://sst.dev/guide.html)
