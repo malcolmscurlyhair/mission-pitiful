@@ -77,7 +77,7 @@
             Don't forget to complete your training by the end of the week!
           {:else if score < 6}
             You know just enough corporate language to be dangerous, but probably still feel a little
-            uneasy talking making small talk with C-suite folk when you share an elevator.
+            uneasy talking making smalltalk with C-suite folk when you share an elevator.
             Concentrate on your Q3 deliverables and there is a leftover donut in the conference room with your name on it.
           {:else if score < 8}
             Your colleagues are jealous of your Powerpoint skills, and you probably belong to a golf club.
@@ -93,4 +93,12 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="mt-10 text-gray-400 text-xs">
+  Did you enjoy this? If you did, please consider
+  <a target="_blank"
+     class="text-indigo-400 hover:text-gray-400"
+     href="https://livebook.manning.com/book/grokking-web-application-security/welcome/v-5/">purchasing my book!</a>
+
 </div>
