@@ -110,15 +110,15 @@
 </script>
 
 <!-- The "Quit Game" icon -->
-<div class="flex md:absolute left-5 top-4 text-gray-400 hover:text-gray-900">
+<div class="flex absolute left-2 top-0 sm:left-5 sm:top-4 text-gray-400 hover:text-gray-900">
   <a href="/" class="text-2xl" on:click|preventDefault={exitPage}>
     ←
   </a>
 </div>
 
 {#if game}
-  <div class="mx-auto max-w-lg py-5">
-  <div class="text-center w-full">
+  <div class="sm:mx-auto max-w-lg py-0 sm:py-5">
+  <div class="text-center mx-2 sm:mx-0 sm:w-full">
 
     <!-- A row of baubles showing how far the user has progressed through the quiz. -->
     <Progress game={game} />
@@ -140,16 +140,16 @@
 
 {:else}
 
-  <h2 class="mt-2 text-base font-bold leading-6 text-gray-900 mb-5">
+  <h2 class="mt-1 mb-2 sm:mt-2 sm:mb-5 text-base font-bold leading-6 text-gray-900 ">
     Mission Statement {index + 1}
   </h2>
 
   <!-- Some tasteful and generic stock art illustrations. -->
-  <div class="mt-3 mx-20 bg-contain bg-center bg-no-repeat italic"
+  <div class="mt-1 sm:mt-3 mx-2 sm:mx-20 bg-contain bg-center bg-no-repeat italic"
        style="background-image: url({imageUrl}); height: 180px; opacity: 0.8">
   </div>
 
-  <blockquote class="text-center text-md font-semibold mt-4 leading-7 text-gray-900 mb-8">
+  <blockquote class="mx-3 sm:mx-0 mb-5 sm:mb-8 text-center text-md font-semibold mt-4 leading-7 text-gray-900 ">
     “{statement}”
   </blockquote>
 
@@ -204,7 +204,7 @@
     {/if}
 
     <!-- Skip to the the next question when the user is ready. -->
-    <div class="mt-8 w-full text-center">
+    <div class="mt-3 sm:mt-8 w-full text-center">
       <form method="POST" action="?/nextQuestion" on:submit|preventDefault={nextQuestion}>
         <button type="submit" class="rounded-full bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
           Next →

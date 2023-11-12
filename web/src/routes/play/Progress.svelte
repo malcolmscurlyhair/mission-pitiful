@@ -2,7 +2,7 @@
   export let game = null;
 </script>
 
-<span class="flex items-center justify-center w-full">
+<span class="items-center justify-center w-full hidden sm:flex">
   <ol class="flex items-center pb-5">
     {#if game && game.correctAnswers}
       {#each game.correctAnswers as choice, i}

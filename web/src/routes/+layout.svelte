@@ -11,6 +11,5 @@
   <main>
     <slot/>
   </main>
-
 </div>
 
