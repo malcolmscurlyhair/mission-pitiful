@@ -5,8 +5,8 @@ import openai
 import unidecode
 
 # A simple script to ask OpenAI for the the biggest N companies in the US,
-# pull down their mission statement and an actual plain-language for what
-# they are best known for. We omit the first sentence of the mission statement
+# pull down their mission statement and an actual plain-language description of
+# what they are best known for. We omit the first sentence of the mission statement
 # so things are vaguer.
 #
 # To use this script, you'll need to add an Open AI access key to you environment
