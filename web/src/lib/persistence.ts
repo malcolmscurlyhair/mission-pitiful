@@ -17,7 +17,7 @@ export async function saveResults(game : Game) {
 
     console.log("Connection successful")
 
-    for (const company of game.correctAnswers) {
+    for (const [i, company] of game.correctAnswers.entries()) {
       const correct = game.guesses[i] == company;
 
       console.log(`Saving answer ${correct}`)
