@@ -18,8 +18,6 @@ export async function saveResults(game : Game) {
 
       const correct = game.guesses[i] == company;
 
-      console.log(`Saving answer ${correct}`)
-
       try {
         console.log(`Creating row for ${company}`)
 
@@ -94,6 +92,8 @@ export async function getTotals() {
     console.log(`Pulled back ${results.Items.length} results, filtering and ordering...`)
 
     const companies = results.Items.map((row) => {
+      console.log(row)
+
       const result = {
         company:    row.company,
         correct:    row.correct    || 0,
