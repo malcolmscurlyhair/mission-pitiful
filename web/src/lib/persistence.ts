@@ -4,7 +4,7 @@ import AWS from 'aws-sdk';
 /**
  * Save the results of a game to the database.
  */
-export function saveResults(game : Game) {
+export async function saveResults(game : Game) {
   if (game.persisted) {
     console.log('Game already persisted, not saving results again...')
     return game;
@@ -25,7 +25,7 @@ export function saveResults(game : Game) {
       try {
         console.log(`Creating row for ${company}`)
 
-        dynamoDb.put({
+        const resultOfInsert = await dynamoDb.put({
           TableName: 'malcolm-web-results',
           Item: {
             "company"   : company,
@@ -33,9 +33,10 @@ export function saveResults(game : Game) {
             "incorrect" : 0
           },
           ConditionExpression: "attribute_not_exists(company)"
-        })
+        }).promise()
 
         console.log(`Created row for ${company}`)
+        console.log(resultOfInsert)
       }
       catch (e) {
         // We expect this to fail if the row already exists.
@@ -44,7 +45,7 @@ export function saveResults(game : Game) {
 
       console.log(`Incrementing count for ${company}`)
 
-      dynamoDb.update({
+      const resultOfUpdate = dynamoDb.update({
         TableName: 'malcolm-web-results',
         Key: {
           partitionKey: company
@@ -64,6 +65,7 @@ export function saveResults(game : Game) {
       });
 
       console.log(`Incremented count for ${company}`)
+      console.log(resultOfUpdate)
     })
   } catch (error) {
     console.error('Error writing to DynamoDB:', error);
