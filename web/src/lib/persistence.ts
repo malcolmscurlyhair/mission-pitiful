@@ -58,11 +58,11 @@ export async function getTotals() {
 
     console.log("Connection successful")
 
-    const result = await dynamoDb.scan({ TableName: 'malcolm-web-results' }).promise();
+    const results = await dynamoDb.scan({ TableName: 'malcolm-web-results' }).promise();
 
     console.log("Pulled back results")
 
-    if (!result.Items)  {
+    if (!results.Items)  {
       console.log("Result set is empty")
       return null;
     }
