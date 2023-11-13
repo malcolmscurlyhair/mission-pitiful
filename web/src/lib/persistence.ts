@@ -19,7 +19,7 @@ export async function saveResults(game : Game) {
       const correct = game.guesses[i] == company;
 
       try {
-        console.log(`Creating row for ${company}`)
+        console.log(`Creating row ${i} for ${company}`)
 
         await dynamoDb.put({
           TableName: 'malcolm-web-results',
@@ -27,32 +27,31 @@ export async function saveResults(game : Game) {
             "company"   : company,
             "correct"   : 0,
             "incorrect" : 0
-          },
-          ConditionExpression: "attribute_not_exists(company)"
-        }).promise()
+          }
+        })
 
-        console.log(`Created row for ${company}`)
+        console.log(`Created row ${i} for ${company}`)
       }
       catch (e) {
         // We expect this to fail if the row already exists.
         console.error('Error inserting item in DynamoDB:', error);
       }
 
-      console.log(`Incrementing count for ${company}`)
+      console.log(`Incrementing count on row ${i} for ${company}`)
 
       await dynamoDb.update({
         TableName: 'malcolm-web-results',
         Key: {
           partitionKey: company
         },
-        UpdateExpression: 'SET correct = correct + :right, incorrect =  incorrect + :right',
+        UpdateExpression: 'SET correct = correct + :right, incorrect = incorrect + :right',
         ExpressionAttributeValues: {
           ':right': correct ? 1 : 0,
           ':wrong': correct ? 0 : 1
         }
-      }).promise();
+      })
 
-      console.log(`Incremented count for ${company}`)
+      console.log(`Incremented count on row ${i} for  ${company}`)
     }
   } catch (error) {
     console.error('Error writing to DynamoDB:', error);
