@@ -66,8 +66,6 @@ export async function getTotals() {
     const dynamoDb = new AWS.DynamoDB.DocumentClient()
     const results  = await dynamoDb.scan({ TableName: 'malcolm-web-results' }).promise();
 
-    console.log("Pulled back results")
-
     if (!results.Items)  {
       console.log("Result set is empty")
       return null;
