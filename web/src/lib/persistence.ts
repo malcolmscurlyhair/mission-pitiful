@@ -19,6 +19,22 @@ export function saveResults(game : Game) {
 
       console.log(`Saving answer ${correct}`)
 
+      try {
+        dynamoDb.put({
+          TableName: 'malcolm-web-results',
+          Item: {
+            "company": company,
+            "correct": 0,
+            "incorrect": 0
+          },
+          ConditionExpression: "attribute_not_exists(company)"
+        })
+      }
+      catch (e) {
+        // We expect this to fail if the row already exists.
+        console.error('Error inserting item in DynamoDB:', error);
+      }
+
       dynamoDb.update({
         TableName: 'malcolm-web-results',
         Key: {
