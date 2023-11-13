@@ -20,7 +20,7 @@ export function saveResults(game : Game) {
       console.log(`Saving answer ${correct}`)
 
       dynamoDb.update({
-        TableName: 'results',
+        TableName: 'malcolm-web-results',
         Key: {
           partitionKey: company
         },
@@ -58,7 +58,7 @@ export async function getTotals() {
 
     console.log("Connection successful")
 
-    const result = await dynamoDb.scan({ TableName: 'results' }).promise();
+    const result = await dynamoDb.scan({ TableName: 'malcolm-web-results' }).promise();
 
     console.log("Pulled back results")
 
