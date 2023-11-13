@@ -95,7 +95,7 @@ export async function getTotals() {
         incorrect:  row.incorrect  || 0
       }
 
-      results.total = row.correct + row.incorrect;
+      result.total = row.correct + row.incorrect;
 
       if (result.total > 0) {
         result.percentage = ((row.correct / result.total) * 100).toFixed(1)
@@ -105,7 +105,7 @@ export async function getTotals() {
       }
 
       return result;
-    }).filter((result) => result.percentage).sort((a, b) => b.percentage - a.percentage)
+    }).filter((result) => result.total > 0).sort((a, b) => b.percentage - a.percentage)
 
     if (companies.length < 10) {
       // We want to return top and bottom 5.

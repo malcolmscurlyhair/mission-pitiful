@@ -102,7 +102,7 @@ export const actions = {
     game.nextQuestion()
 
     if (!process.env.IS_LOCAL) {
-      saveResults(game)
+      await saveResults(game)
     }
 
     game.persisted = true
