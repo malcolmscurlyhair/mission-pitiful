@@ -105,7 +105,7 @@ export async function getTotals() {
       }
 
       return result;
-    }).filter((result) => result.total > 0).sort((a, b) => b.percentage - a.percentage)
+    }).filter((result) => result.percentage > 0).sort((a, b) => b.percentage - a.percentage)
 
     if (companies.length < 10) {
       // We want to return top and bottom 5.
