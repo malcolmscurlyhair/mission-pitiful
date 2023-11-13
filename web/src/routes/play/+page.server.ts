@@ -11,7 +11,7 @@ export  const load = (({ cookies }) => {
   // Load some statistics about which companies users tended to get wrong or right.
   let stats
 
-  if (process.env.IS_LOCAL === false) {
+  if (!process.env.IS_LOCAL) {
     stats = getTotals()
   }
   else {
@@ -101,7 +101,7 @@ export const actions = {
 
     game.nextQuestion()
 
-    if (process.env.IS_LOCAL === false) {
+    if (!process.env.IS_LOCAL) {
       saveResults(game)
     }
 
