@@ -21,7 +21,7 @@ export async function saveResults(game : Game) {
       try {
         console.log(`Creating row for ${company}`)
 
-        dynamoDb.put({
+        await dynamoDb.put({
           TableName: 'malcolm-web-results',
           Item: {
             "company"   : company,
@@ -29,10 +29,7 @@ export async function saveResults(game : Game) {
             "incorrect" : 0
           },
           ConditionExpression: "attribute_not_exists(company)"
-        }, function(err, data) {
-          if (err) console.log(err, err.stack); // an error occurred
-          else     console.log(data);           // successful response
-        })
+        }).promise()
 
         console.log(`Created row for ${company}`)
       }
@@ -43,7 +40,7 @@ export async function saveResults(game : Game) {
 
       console.log(`Incrementing count for ${company}`)
 
-      dynamoDb.update({
+      await dynamoDb.update({
         TableName: 'malcolm-web-results',
         Key: {
           partitionKey: company
@@ -53,10 +50,7 @@ export async function saveResults(game : Game) {
           ':right': correct ? 1 : 0,
           ':wrong': correct ? 0 : 1
         }
-      }, function(err, data) {
-        if (err) console.log(err, err.stack); // an error occurred
-        else     console.log(data);           // successful response
-      });
+      }).promise();
 
       console.log(`Incremented count for ${company}`)
     }
@@ -74,13 +68,8 @@ export async function saveResults(game : Game) {
  */
 export async function getTotals() {
   try {
-    console.log("Connecting to the database to retrieve totals...")
-
     const dynamoDb = new AWS.DynamoDB.DocumentClient()
-
-    console.log("Connection successful")
-
-    const results = await dynamoDb.scan({ TableName: 'malcolm-web-results' }).promise();
+    const results  = await dynamoDb.scan({ TableName: 'malcolm-web-results' }).promise();
 
     console.log("Pulled back results")
 
