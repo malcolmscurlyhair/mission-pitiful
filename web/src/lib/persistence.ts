@@ -11,11 +11,7 @@ export async function saveResults(game : Game) {
   }
 
   try {
-    console.log("Connecting to the database to record results...")
-
     const dynamoDb = new AWS.DynamoDB.DocumentClient()
-
-    console.log("Connection successful")
 
     for (const [i, company] of game.correctAnswers.entries()) {
       if (company == null) continue
@@ -27,7 +23,7 @@ export async function saveResults(game : Game) {
       try {
         console.log(`Creating row for ${company}`)
 
-        await dynamoDb.put({
+        dynamoDb.put({
           TableName: 'malcolm-web-results',
           Item: {
             "company"   : company,
@@ -35,6 +31,9 @@ export async function saveResults(game : Game) {
             "incorrect" : 0
           },
           ConditionExpression: "attribute_not_exists(company)"
+        }, function(err, data) {
+          if (err) console.log(err, err.stack); // an error occurred
+          else     console.log(data);           // successful response
         })
 
         console.log(`Created row for ${company}`)
@@ -46,7 +45,7 @@ export async function saveResults(game : Game) {
 
       console.log(`Incrementing count for ${company}`)
 
-      await dynamoDb.update({
+      dynamoDb.update({
         TableName: 'malcolm-web-results',
         Key: {
           partitionKey: company
@@ -56,6 +55,9 @@ export async function saveResults(game : Game) {
           ':right': correct ? 1 : 0,
           ':wrong': correct ? 0 : 1
         }
+      }, function(err, data) {
+        if (err) console.log(err, err.stack); // an error occurred
+        else     console.log(data);           // successful response
       });
 
       console.log(`Incremented count for ${company}`)
