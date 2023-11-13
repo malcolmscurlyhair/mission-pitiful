@@ -21,7 +21,7 @@ export async function saveResults(game : Game) {
       console.log(`Creating row ${i} for ${company}`)
 
       const insert = await dynamoDb.put({
-        TableName: 'malcolm-web-results',
+        TableName: 'results',
         Item: {
           "company"   : company,
           "correct"   : 0,
@@ -35,7 +35,7 @@ export async function saveResults(game : Game) {
       console.log(`Incrementing count on row ${i} for ${company}`)
 
       const update = await dynamoDb.update({
-        TableName: 'malcolm-web-results',
+        TableName: 'results',
         Key: {
           company: company
         },
