@@ -14,7 +14,7 @@ export function saveResults(game : Game) {
 
     console.log("Connection successful")
 
-    game.correctAnswers.each((company, i) => {
+    game.correctAnswers.forEach((company, i) => {
       const correct = game.guesses[i] == company;
 
       console.log(`Saving answer ${correct}`)
