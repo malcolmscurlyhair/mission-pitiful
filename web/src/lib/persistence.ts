@@ -33,7 +33,7 @@ export async function saveResults(game : Game) {
             "incorrect" : 0
           },
           ConditionExpression: "attribute_not_exists(company)"
-        }).promise()
+        })
 
         console.log(`Created row for ${company}`)
         console.log(resultOfInsert)
