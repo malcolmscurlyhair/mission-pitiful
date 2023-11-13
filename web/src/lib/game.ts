@@ -80,6 +80,7 @@ export class Game {
     this.descriptions   = [];
     this.choices        = [];
     this.correctAnswers = [];
+    this.persisted      = false;
 
     // Put the company names in a random order.
     const companyNames = shuffle(Object.keys(companies));

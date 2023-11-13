@@ -25,7 +25,7 @@ export async function saveResults(game : Game) {
       try {
         console.log(`Creating row for ${company}`)
 
-        const resultOfInsert = await dynamoDb.put({
+        await dynamoDb.put({
           TableName: 'malcolm-web-results',
           Item: {
             "company"   : company,
@@ -36,7 +36,6 @@ export async function saveResults(game : Game) {
         })
 
         console.log(`Created row for ${company}`)
-        console.log(resultOfInsert)
       }
       catch (e) {
         // We expect this to fail if the row already exists.
@@ -45,7 +44,7 @@ export async function saveResults(game : Game) {
 
       console.log(`Incrementing count for ${company}`)
 
-      const resultOfUpdate = await dynamoDb.update({
+      await dynamoDb.update({
         TableName: 'malcolm-web-results',
         Key: {
           partitionKey: company
@@ -58,7 +57,6 @@ export async function saveResults(game : Game) {
       });
 
       console.log(`Incremented count for ${company}`)
-      console.log(resultOfUpdate)
     }
   } catch (error) {
     console.error('Error writing to DynamoDB:', error);
