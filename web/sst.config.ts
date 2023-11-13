@@ -1,5 +1,6 @@
 import type { SSTConfig } from "sst";
 import { SvelteKitSite } from "sst/constructs";
+import { DynamoDB } from "./stacks/database";
 
 export default {
   config(_input) {
@@ -15,5 +16,7 @@ export default {
         url: site.url,
       });
     });
+
+    app.stack(DynamoDB)
   },
 } satisfies SSTConfig;
