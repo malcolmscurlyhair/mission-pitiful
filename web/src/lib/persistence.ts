@@ -17,7 +17,7 @@ export async function saveResults(game : Game) {
 
     console.log("Connection successful")
 
-    game.correctAnswers.forEach((company, i) => {
+    for (const company of game.correctAnswers) {
       const correct = game.guesses[i] == company;
 
       console.log(`Saving answer ${correct}`)
@@ -45,7 +45,7 @@ export async function saveResults(game : Game) {
 
       console.log(`Incrementing count for ${company}`)
 
-      const resultOfUpdate = dynamoDb.update({
+      const resultOfUpdate = await dynamoDb.update({
         TableName: 'malcolm-web-results',
         Key: {
           partitionKey: company
@@ -55,18 +55,11 @@ export async function saveResults(game : Game) {
           ':right': correct ? 1 : 0,
           ':wrong': correct ? 0 : 1
         }
-      }, (error, data) => {
-        if (error) {
-          console.error('Error updating item in DynamoDB:', error);
-        }
-        else {
-          console.log("Update sucessful")
-        }
       });
 
       console.log(`Incremented count for ${company}`)
       console.log(resultOfUpdate)
-    })
+    }
   } catch (error) {
     console.error('Error writing to DynamoDB:', error);
   }
