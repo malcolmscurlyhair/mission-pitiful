@@ -11,6 +11,8 @@ export async function saveResults(game : Game) {
   }
 
   try {
+    console.log("Connecting to DynamoDB...")
+
     const dynamoDb = new AWS.DynamoDB.DocumentClient()
     const inserts  = []
     const updates  = []
@@ -39,6 +41,8 @@ export async function saveResults(game : Game) {
       })
     }
 
+    console.log("Insert empty rows before incrementing values...")
+
     const inserted = await dynamoDb.batchWrite(params = {
       RequestItems: {
         results: inserts
@@ -46,6 +50,7 @@ export async function saveResults(game : Game) {
     }).promise();
 
     console.log(`Ran batched insert got response: ${inserted}`)
+    console.log('Proceeding to updates')
 
     for (update in updates) {
       const updated = await dynamoDb.put(params = update).promise();
@@ -67,6 +72,8 @@ export async function saveResults(game : Game) {
  */
 export async function getTotals() {
   try {
+    console.log("Running full table scan to get stats...")
+
     const dynamoDb = new AWS.DynamoDB.DocumentClient()
     const results  = await dynamoDb.scan({ TableName: 'results' }).promise();
 
