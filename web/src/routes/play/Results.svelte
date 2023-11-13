@@ -30,7 +30,7 @@
     <div class="flex flex-col sm:flex-row my-3 items-center sm:items-start">
       <div class="sm:mr-7 text-center">
         {#if score < 2}
-          <div class="bg-gray-800 award-icon">
+          <div class="bg-gray-500 award-icon">
             <img src="/awards/janitor.svg" alt="A janitor doing a real job">
           </div>
         {:else if score < 4}
