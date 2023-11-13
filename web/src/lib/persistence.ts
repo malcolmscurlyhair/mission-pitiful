@@ -43,7 +43,7 @@ export async function saveResults(game : Game) {
 
     console.log("Insert empty rows before incrementing values...")
 
-    const inserted = await dynamoDb.batchWrite(params = {
+    const inserted = await dynamoDb.batchWrite({
       RequestItems: {
         results: inserts
       },
@@ -53,7 +53,7 @@ export async function saveResults(game : Game) {
     console.log('Proceeding to updates')
 
     for (update in updates) {
-      const updated = await dynamoDb.put(params = update).promise();
+      const updated = await dynamoDb.put(update).promise();
 
       console.log(`Ran singular update, got response: ${update}`)
     }
