@@ -43,7 +43,7 @@ export async function saveResults(game : Game) {
       })
     }
 
-    console.log("Insert empty rows before incrementing values...")
+    console.log("Inserting empty rows before incrementing values...")
 
     const inserted = await dynamoDb.batchWrite({
       RequestItems: {
@@ -54,10 +54,10 @@ export async function saveResults(game : Game) {
     console.log(`Ran batched insert got response: ${inserted}`)
     console.log('Proceeding to updates')
 
-    for (update in updates) {
-      const updated = await dynamoDb.put(update).promise();
+    for (const [i, update] of updates.entries()) {
+      const updated = await dynamoDb.update(update).promise();
 
-      console.log(`Ran singular update, got response: ${update}`)
+      console.log(`Ran singular update ${i}, got response: ${updated}`)
     }
 
   } catch (error) {
