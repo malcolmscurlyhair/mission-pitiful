@@ -4,15 +4,16 @@
 </script>
 
 <svelte:head>
-
   {#if GOOGLE_ANALYTICS_ID}
     <script async src="https://www.googletagmanager.com/gtag/js?id={GOOGLE_ANALYTICS_ID}"></script>
+    <meta name="google-analytics-id" content={GOOGLE_ANALYTICS_ID} />
     <script>
+      const googleAnalyticsID = document.querySelector('meta[name="google-analytics-id"]').getAttribute('content');
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      gtag('config', {GOOGLE_ANALYTICS_ID});
+      gtag('config', googleAnalyticsID);
     </script>
   {/if}
 </svelte:head>
