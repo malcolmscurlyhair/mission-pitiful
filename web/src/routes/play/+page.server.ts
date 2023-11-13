@@ -56,12 +56,12 @@ export const actions = {
   /**
    * Update game state based on a guess.
    */
-  useHasGuessed: async ({ request, cookies }) => {
+  userHasGuessed: async ({ request, cookies }) => {
     const game  = new Game(cookies.get('mission-pitiful'));
     const data  = await request.formData();
     const guess = data.get('guess') as string;
 
-    game.useHasGuessed(guess);
+    game.userHasGuessed(guess);
 
     cookies.set('mission-pitiful', game.toString());
 

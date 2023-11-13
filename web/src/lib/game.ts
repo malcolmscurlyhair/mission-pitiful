@@ -113,7 +113,7 @@ export class Game {
   /**
    * Update game state based on a guess, adjust the score accordingly.
    */
-  useHasGuessed(guess: string) {
+  userHasGuessed(guess: string) {
     this.guesses.push(guess);
     this.showingAnswer = true;
 

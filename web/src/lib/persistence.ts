@@ -55,9 +55,7 @@ export async function saveResults(game : Game) {
     console.log('Proceeding to updates')
 
     for (const [i, update] of updates.entries()) {
-      const updated = await dynamoDb.update(update).promise();
-
-      console.log(`Ran singular update ${i}, got response: ${updated}`)
+      await dynamoDb.update(update).promise();
     }
 
   } catch (error) {
@@ -87,8 +85,6 @@ export async function getTotals() {
     console.log(`Pulled back ${results.Items.length} results, filtering and ordering...`)
 
     const companies = results.Items.map((row) => {
-      console.log(row)
-
       const result = {
         company:    row.company,
         correct:    row.correct    || 0,

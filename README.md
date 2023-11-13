@@ -10,11 +10,11 @@ which are most often guessed wrong.
 The mission statements and company data are pulled from OpenAI by code in the
 [`/research`](/research) directory. The [`/grab.py`](/research/grab.py) 
 scripts asks OpenAI for a list of companies, their mission statements, and a 
-succinct description of what each company does, then writes it to disk.
+succinct description of what each company does then writes it to disk.
 
 The final output is written to [`/research/docs/data.json`](/research/docs/data.json), which then forms the basis of the quiz. This 
 data is then migrated (via the magic of cut-and-paste) to 
-[`/web/src/lib/quiz.ts`](/web/src/lib/quiz.ts), around which the web app is 
+[`/web/src/lib/quiz.ts`](/web/src/lib/quiz.ts) around which the web app is 
 build.
 
 The web app lives in [`/web`](/web) and is written using [Svelte](https://svelte.dev/docs/introduction) using [Tailwind](https://tailwindcss.com/docs) for styling. It's a simple app with a handful of pages, that 
@@ -26,4 +26,7 @@ start reading from there if you want to see how it works.
 
 ## Deployment
 
-The code is deployed as a AWS Lambda function using [sst.dev](https://sst.dev/guide.html)
+The code is deployed as an AWS Lambda function using [sst.dev](https://sst.dev/guide.html).
+Unless the `IS_LOCAL` flag is set, the app will save the results of the quiz 
+to a DynamoDB table, so it can show aggregate totals of which companies were 
+guessed correctly and incorrectly most often.

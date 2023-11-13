@@ -14,7 +14,7 @@
   // wrong most often.
   const stats = data.stats;
 
-  // As the user progresses through the quiz, we write the game state to localStorage.
+  // As the user progresses through the quiz we write the game state to localStorage.
   // (If the JavaScript is enabled; otherwise it's written to a cookie). This keeps
   // the user's place if they refresh the page.
   const localState = browser && localStorage ? localStorage.getItem('mission-pitiful') : null
@@ -25,6 +25,7 @@
 
   // Unpack some of the game state into local variables so the renderer
   // will update the page as they change.
+
   $: index         = game.index;                 // Which question number the user is on (0-10).
   $: score         = game.score;                 // The total score so far.
   $: gameIsOver    = index == 10;                // Is the game over? We only go 10 rounds?
@@ -41,8 +42,8 @@
    * that this function won't get called if JavaScript is disabled (duh), in which case
    * we fall back to a server-side action (see +page.server.ts).
    */
-  function useHasGuessed(answer: string) {
-    game.useHasGuessed(answer);
+  function userHasGuessed(answer: string) {
+    game.userHasGuessed(answer);
 
     currentGuess  = answer;
     index         = game.index;
@@ -69,7 +70,7 @@
   }
 
   /**
-   * Restart the game, after the quiz is over and the user chooses to try again.
+   * Restart the game after the quiz is over and the user chooses to try again.
    */
   function restart() {
     localStorage.removeItem('mission-pitiful');
@@ -105,8 +106,8 @@
 
   /**
    * Called when the user clicks on the "Quit" icon in the top-left corner. We assume
-   * the user wants a fresh game state if they return, so clear all game state out of
-   * localStorage.
+   * the user will want a fresh game state if they return, so we clear the game state out
+   * of localStorage.
    */
   function exitPage() {
     localStorage.removeItem('mission-pitiful');
@@ -176,6 +177,7 @@
 
 {:else}
 
+  <!-- Render the current quiz question (and answers, if appropriate). -->
   <h2 class="mt-1 mb-2 sm:mt-2 sm:mb-5 text-base font-bold leading-6 text-gray-900 ">
     Mission Statement {index + 1}
   </h2>
@@ -185,6 +187,7 @@
        style="background-image: url({imageUrl}); height: 180px; opacity: 0.8">
   </div>
 
+  <!-- The actual mission statement. -->
   <blockquote class="mx-3 sm:mx-0 mb-5 sm:mb-8 text-center text-md font-semibold mt-4 leading-7 text-gray-900 ">
     “{statement}”
   </blockquote>
@@ -240,7 +243,7 @@
     {/if}
 
     {#if index === 9}
-      <!-- POST results to the serverside. -->
+      <!-- On the last question, wePOST results to the serverside so we can save can save them to DynamoDB. -->
       <div class="mt-3 sm:mt-8 w-full text-center">
         <form method="POST" action="?/saveResults" on:submit|preventDefault={saveResults}>
           <input type="hidden" name="state" value={game.toString()} />
@@ -260,9 +263,9 @@
       </div>
     {/if}
 
-
-
   {:else}
+
+
     <h3 class="text-sm font-medium text-gray-500 mb-5">
       Which company do you think this is?
     </h3>
@@ -271,14 +274,14 @@
       {#if choices}
         {#each choices as choice}
           <!--
-            Allow the user to guess company. This either calls the useHasGuessed()
+            Allow the user to guess company. This either calls the userHasGuessed()
             function, or if JavaScript is disabled, we submit a POST request to the
             server.
           -->
           <li class="inline-block items-center justify-between pb-3 mr-3">
             <form method="POST"
-                  action="?/useHasGuessed"
-                  on:submit|preventDefault={() => useHasGuessed(choice)}>
+                  action="?/userHasGuessed"
+                  on:submit|preventDefault={() => userHasGuessed(choice)}>
 
               <input name="guess" type="hidden" value={choice} />
 
