@@ -267,9 +267,9 @@ export const companies = {
     "mission-statement": "BLANK's purpose is to help more and more people experience financial well-being. To accomplish this, BLANK relentlessly focuses on developing thoughtful solutions within communities and landscaping a world of possibility.",
     "business-model":    "Manages financial investments for individuals and organizations.",
   },
-  "Block HandR": {
+  "HandR Block": {
     "mission-statement": "BLANK provides customers with control, transparency, and security for their payments and taxes. BLANK is a digital platform that allows customers to securely file and pay taxes, manage their payrolls, and keep a record of various payments.",
-    "business-model":    "Develops blockchain solutions for companies.",
+    "business-model":    "Helps people prepare their taxes.",
   },
   "BMC Software": {
     "mission-statement": "BLANK accelerates the journey to digital transformation and cloud computing for customers and partners of all sizes. Our mission is to simplify and reduce the cost of IT management and enable its customers to more securely power an Digital BLANK.",

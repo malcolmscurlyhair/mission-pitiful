@@ -25,6 +25,8 @@ export class Game {
   statements:     string[];    // The mission statements the user has to guess.
   descriptions:   string[];    // The descriptions of what each company does.
 
+  persisted:      false;       // Whether the final results have been persisted to the DynamoDB database.
+
   /**
    * Create a game object from the player's from a serialized form, or initialise a new game.
    */
@@ -39,6 +41,7 @@ export class Game {
         this.showingAnswer   = data.showingAnswer;
         this.choices         = data.choices;
         this.correctAnswers  = data.correctAnswers;
+        this.persisted       = data.persisted;
 
         // Reload the mission statement and business model for each company -
         // these won't be serialized in the cookie since it gets too big.
@@ -139,6 +142,7 @@ export class Game {
       showingAnswer  : this.showingAnswer,
       choices        : this.choices,
       correctAnswers : this.correctAnswers,
+      persisted      : this.persisted
     }
 
     if (includeDescriptions) {
