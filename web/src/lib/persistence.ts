@@ -13,7 +13,7 @@ export function saveResults(game : Game) {
     const dynamoDb = new AWS.DynamoDB.DocumentClient()
 
     console.log("Connection successful")
-    
+
     game.correctAnswers.each((company, i) => {
       const correct = game.guesses[i] == company;
 
