@@ -23,8 +23,8 @@ export async function saveResults(game : Game) {
       inserts.push({
         PutRequest: {
           Item : {
-            company: company,
-            correct: 0,
+            company:   company,
+            correct:   0,
             incorrect: 0
           }
         }
