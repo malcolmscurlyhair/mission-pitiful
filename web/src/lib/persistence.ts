@@ -5,7 +5,10 @@ import AWS from 'aws-sdk';
  * Save the results of a game to the database.
  */
 export function saveResults(game : Game) {
-  if (game.persisted) return game;
+  if (game.persisted) {
+    console.log('Game already persisted, not saving results again...')
+    return game;
+  }
 
   try {
     console.log("Connecting to the database to record results...")
@@ -20,27 +23,33 @@ export function saveResults(game : Game) {
       console.log(`Saving answer ${correct}`)
 
       try {
+        console.log(`Creating row for ${company}`)
+
         dynamoDb.put({
           TableName: 'malcolm-web-results',
           Item: {
-            "company": company,
-            "correct": 0,
-            "incorrect": 0
+            "company"   : company,
+            "correct"   : 0,
+            "incorrect" : 0
           },
           ConditionExpression: "attribute_not_exists(company)"
         })
+
+        console.log(`Created row for ${company}`)
       }
       catch (e) {
         // We expect this to fail if the row already exists.
         console.error('Error inserting item in DynamoDB:', error);
       }
 
+      console.log(`Incrementing count for ${company}`)
+
       dynamoDb.update({
         TableName: 'malcolm-web-results',
         Key: {
           partitionKey: company
         },
-        UpdateExpression: 'SET correct = correct + :right, incorrect =  + incorrect + :right',
+        UpdateExpression: 'SET correct = correct + :right, incorrect =  incorrect + :right',
         ExpressionAttributeValues: {
           ':right': correct ? 1 : 0,
           ':wrong': correct ? 0 : 1
@@ -53,6 +62,8 @@ export function saveResults(game : Game) {
           console.log("Update sucessful")
         }
       });
+
+      console.log(`Incremented count for ${company}`)
     })
   } catch (error) {
     console.error('Error writing to DynamoDB:', error);
