@@ -18,6 +18,8 @@ export async function saveResults(game : Game) {
     console.log("Connection successful")
 
     for (const [i, company] of game.correctAnswers.entries()) {
+      if (company == null) continue
+
       const correct = game.guesses[i] == company;
 
       console.log(`Saving answer ${correct}`)
