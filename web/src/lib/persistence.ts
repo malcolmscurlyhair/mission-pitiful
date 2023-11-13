@@ -12,45 +12,49 @@ export async function saveResults(game : Game) {
 
   try {
     const dynamoDb = new AWS.DynamoDB.DocumentClient()
+    const inserts  = []
+    const updates  = []
 
     for (const [i, company] of game.correctAnswers.entries()) {
       if (company == null) continue
 
+      inserts.push({
+        PutRequest: {
+          company:   company,
+          correct:   0,
+          incorrect: 0
+        }
+      })
+
       const correct = game.guesses[i] == company;
 
-      console.log(`Creating row ${i} for ${company}`)
-
-      const insert = await dynamoDb.put({
+      updates.push({
         TableName: 'results',
-        Item: {
-          "company"   : company,
-          "correct"   : 0,
-          "incorrect" : 0
-        },
-        ConditionExpression: 'attribute_not_exists(company)',
-      }).promise()
-
-      console.log(`Created row ${i} for ${company}: ${insert}`)
-
-      console.log(`Incrementing count on row ${i} for ${company}`)
-
-      const update = await dynamoDb.update({
-        TableName: 'results',
-        Key: {
-          company: company
-        },
-        UpdateExpression: 'SET correct = correct + :right, incorrect = incorrect + :right',
+        Key: { company: company },
+        UpdateExpression: 'SET correct = correct + :right, incorrect = incorrect + :wrong',
         ExpressionAttributeValues: {
           ':right': correct ? 1 : 0,
           ':wrong': correct ? 0 : 1
-        },
-        ReturnValues: 'UPDATED_NEW'
-      }).promise()
-
-      console.log(`Incremented count on row ${i} for  ${company}: ${update}`)
+        }
+      })
     }
+
+    const inserted = await dynamoDb.batchWrite(params = {
+      RequestItems: {
+        results: inserts
+      },
+    }).promise();
+
+    console.log(`Ran batched insert got response: ${inserted}`)
+
+    for (update in updates) {
+      const updated = await dynamoDb.put(params = update).promise();
+
+      console.log(`Ran singular update, got response: ${update}`)
+    }
+
   } catch (error) {
-    console.error('Error writing to DynamoDB:', error);
+    console.log('Error writing to DynamoDB:', error);
   }
 
   game.persisted = true;
@@ -64,7 +68,7 @@ export async function saveResults(game : Game) {
 export async function getTotals() {
   try {
     const dynamoDb = new AWS.DynamoDB.DocumentClient()
-    const results  = await dynamoDb.scan({ TableName: 'malcolm-web-results' }).promise();
+    const results  = await dynamoDb.scan({ TableName: 'results' }).promise();
 
     if (!results.Items)  {
       console.log("Result set is empty")
@@ -109,7 +113,7 @@ export async function getTotals() {
     };
   }
   catch (error) {
-    console.error('Error reading data from DynamoDB:', error);
+    console.log('Error reading data from DynamoDB:', error);
   }
 
   return null;
