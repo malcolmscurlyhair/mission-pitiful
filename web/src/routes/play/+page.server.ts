@@ -1,6 +1,6 @@
 import { Game     } from '$lib/game';
 import { redirect } from '@sveltejs/kit'
-import { getTotals, saveTotals } from '$lib/persistence'
+import { getTotals, saveResults } from '$lib/persistence'
 
 /**
  * During server-side rendering we initialize the game state, potentially loading it from a cookie.
@@ -102,7 +102,7 @@ export const actions = {
     game.nextQuestion()
 
     if (process.env.IS_LOCAL === false) {
-      saveTotals(game)
+      saveResults(game)
     }
 
     game.persisted = true
