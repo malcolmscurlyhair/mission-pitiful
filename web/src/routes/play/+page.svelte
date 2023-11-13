@@ -1,13 +1,18 @@
 <script lang="ts">
   import { browser } from "$app/environment"
-  import { Game    } from './game';
+  import { Game    } from '$lib/game';
 
   import Progress from './Progress.svelte';
   import Results  from './Results.svelte';
+  import Stats    from './Stats.svelte';
 
   // The server initializes the game state, which contains all the company names
   // and the corresponding data. See +page.server.ts for details.
   export let data;
+
+  // We load stats on what mission statements the users tended to guess right or
+  // wrong most often.
+  const stats = data.stats;
 
   // As the user progresses through the quiz, we write the game state to localStorage.
   // (If the JavaScript is enabled; otherwise it's written to a cookie). This keeps
@@ -79,6 +84,26 @@
   }
 
   /**
+   * Save the results to the DynamoDB database, flip to the 'game over' state.
+   */
+  async function saveResults(event)  {
+    nextQuestion()
+
+    const state = game.toString(true)
+
+    localStorage.setItem('mission-pitiful', state)
+    game.persisted = true
+
+    const body = new URLSearchParams()
+    body.append('state', state)
+
+    await fetch(event.target.action, {
+      method: 'POST',
+      body: body
+    })
+  }
+
+  /**
    * Called when the user clicks on the "Quit" icon in the top-left corner. We assume
    * the user wants a fresh game state if they return, so clear all game state out of
    * localStorage.
@@ -129,6 +154,17 @@
 
     <!-- Tell the user how they did. -->
     <Results score={score} />
+
+    <!-- Show stats about which companies are most commonly guessed correct or incorrectly. -->
+    <Stats stats={stats} />
+
+    <div class="mt-10 mx-5 sm:mx-0 text-gray-400 text-xs">
+      Did you enjoy this? If you did, please consider
+      <a target="_blank"
+         class="text-indigo-400 hover:text-gray-400"
+         href="https://livebook.manning.com/book/grokking-web-application-security/welcome/v-5/">purchasing my book!</a>
+
+    </div>
 
     <!-- Let them try again. -->
     <form method="POST" action="?/restart" on:submit|preventDefault={restart}>
@@ -203,14 +239,28 @@
       {/each}
     {/if}
 
-    <!-- Skip to the the next question when the user is ready. -->
-    <div class="mt-3 sm:mt-8 w-full text-center">
-      <form method="POST" action="?/nextQuestion" on:submit|preventDefault={nextQuestion}>
-        <button type="submit" class="rounded-full bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-          Next →
-        </button>
-      </form>
-    </div>
+    {#if index === 9}
+      <!-- POST results to the serverside. -->
+      <div class="mt-3 sm:mt-8 w-full text-center">
+        <form method="POST" action="?/saveResults" on:submit|preventDefault={saveResults}>
+          <input type="hidden" name="state" value={game.toString()} />
+          <button type="submit" class="rounded-full bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            Next →
+          </button>
+        </form>
+      </div>
+    {:else}
+      <!-- Skip to the the next question when the user is ready. -->
+      <div class="mt-3 sm:mt-8 w-full text-center">
+        <form method="POST" action="?/nextQuestion" on:submit|preventDefault={nextQuestion}>
+          <button type="submit" class="rounded-full bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+            Next →
+          </button>
+        </form>
+      </div>
+    {/if}
+
+
 
   {:else}
     <h3 class="text-sm font-medium text-gray-500 mb-5">

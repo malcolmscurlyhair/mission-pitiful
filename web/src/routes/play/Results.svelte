@@ -87,18 +87,10 @@
             <b class="text-gray-900">You're a natural at this!</b> Keep on creating the best outcomes for your clients, building
             innovative solutions via sustainable business practices, and your shareholders will
             continue to grow and thrive.
-            It's lonely at the top, but somehow you manage to sleep sleep easily on your giant pile of stock options.
+            It's lonely at the top, but somehow you manage to sleep easily on your giant pile of stock options.
           {/if}
         </p>
       </div>
     </div>
   </div>
-</div>
-
-<div class="mt-10 mx-5 sm:mx-0 text-gray-400 text-xs">
-  Did you enjoy this? If you did, please consider
-  <a target="_blank"
-     class="text-indigo-400 hover:text-gray-400"
-     href="https://livebook.manning.com/book/grokking-web-application-security/welcome/v-5/">purchasing my book!</a>
-
 </div>
