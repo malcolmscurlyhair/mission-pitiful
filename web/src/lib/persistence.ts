@@ -7,11 +7,17 @@ import AWS from 'aws-sdk';
 export function saveResults(game : Game) {
   if (game.persisted) return game;
 
-  const dynamoDb = new AWS.DynamoDB.DocumentClient();
-
   try {
+    console.log("Connecting to the database to record results...")
+
+    const dynamoDb = new AWS.DynamoDB.DocumentClient()
+
+    console.log("Connection successful")
+    
     game.correctAnswers.each((company, i) => {
       const correct = game.guesses[i] == company;
+
+      console.log(`Saving answer ${correct}`)
 
       dynamoDb.update({
         TableName: 'results',
@@ -26,6 +32,9 @@ export function saveResults(game : Game) {
       }, (error, data) => {
         if (error) {
           console.error('Error updating item in DynamoDB:', error);
+        }
+        else {
+          console.log("Update sucessful")
         }
       });
     })
@@ -43,9 +52,22 @@ export function saveResults(game : Game) {
  */
 export async function getTotals() {
   try {
+    console.log("Connecting to the database to retrieve totals...")
+
+    const dynamoDb = new AWS.DynamoDB.DocumentClient()
+
+    console.log("Connection successful")
+
     const result = await dynamoDb.scan({ TableName: 'results' }).promise();
 
-    if (!result.Items)  return null;
+    console.log("Pulled back results")
+
+    if (!result.Items)  {
+      console.log("Result set is empty")
+      return null;
+    }
+
+    console.log(`Pulled back ${results.Items.length} results, filtering and ordering...`)
 
     const companies = results.Items.map((row) => {
       const result = {
@@ -68,8 +90,12 @@ export async function getTotals() {
 
     if (companies.length < 10) {
       // We want to return top and bottom 5.
+      console.log(`Filtered down to ${companies.length} companies, that's not enough!`)
+
       return null;
     }
+
+    console.log("Returning top and bottom 5 companies.")
 
     return {
       top:    companies.slice(0, 5),
