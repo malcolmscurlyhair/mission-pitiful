@@ -26,7 +26,8 @@ export async function saveResults(game : Game) {
             company:   company,
             correct:   0,
             incorrect: 0
-          }
+          },
+          ConditionExpression: 'attribute_not_exists(company)'
         }
       })
 
