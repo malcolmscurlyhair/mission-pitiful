@@ -96,8 +96,8 @@ export class Game {
       this.statements.push(companyDetail['mission-statement']);
       this.descriptions.push(companyDetail['business-model']);
 
-      // Pick the next 9 companies as wrong answers.
-      const wrongAnswers = companyNames.splice(0, 9);
+      // Pick the next 4 companies as wrong answers.
+      const wrongAnswers = companyNames.splice(0, 4);
       const allAnswers   = [ companyName, ...wrongAnswers ];
 
       this.choices.push(shuffle(allAnswers));
